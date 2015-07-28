@@ -1,0 +1,26 @@
+---
+title: "Example Commentary on International Defence"
+author: "Ewan Keith"
+date: "28 July 2015"
+output: html_document
+---
+
+When trying to compare how much governments aroud the world spend on defence one issue is that different governments may use different definitions of what counts as defence spending. Whether or not spending on security agencies should be counted as defence expenditure is one example of the grey areas in setting out what *defence spending* is. In order to try and compare defence spending it can be helpful to sidestep this issue of definitions and use data collected by independant organisations which try and establish consistent rules regarding defence exenditure totals.
+
+There are three high profile producers of international defence spending estimates, these are the [Stockholm International Peace Research Institute (SIPRI)](http://www.sipri.org), the [International Institute for Strategic Studies (IISS)](https://www.iiss.org), and the 
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
