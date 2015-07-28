@@ -7,11 +7,13 @@ output: html_document
 
 When trying to compare how much governments aroud the world spend on defence one issue is that different governments may use different definitions of what counts as defence spending. Whether or not spending on security agencies should be counted as defence expenditure is one example of the grey areas in setting out what *defence spending* is. In order to try and compare defence spending it can be helpful to sidestep this issue of definitions and use data collected by independant organisations which try and establish consistent rules regarding defence exenditure totals.
 
-There are three high profile producers of international defence spending estimates, these are the [Stockholm International Peace Research Institute (SIPRI)](http://www.sipri.org), the [International Institute for Strategic Studies (IISS)](https://www.iiss.org), and the 
+There are three high profile producers of international defence spending estimates, these are the [Stockholm International Peace Research Institute (SIPRI)](http://www.sipri.org), the [International Institute for Strategic Studies (IISS)](https://www.iiss.org), and [NATO](http://www.nato.int/).
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+If these estimates were completely reliable, and all based on common definitions of defence expenditure they could be expected to produce results very similar to one another. However, given the difficulty of producing accurate estimates of defence expenditure (along with the issue of definition) it's likely that these estimates differ from one another. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+This document explores to what extent the defence expenditure of the top 15 global spenders differs between the IISS ad SIPRI (NATO is not compared here as they only publish estimates for member states, not globally)
+
+
 
 ```{r}
 summary(cars)
