@@ -4,6 +4,14 @@ author: "Ewan Keith"
 date: "28 July 2015"
 output: html_document
 ---
+```{r, echo = FALSE, warning=FALSE}
+data <- read.csv("slopeData.csv", row.names=1)
+order_data <- read.csv("spendOrder.csv")
+library(DT)
+```
+
+
+<h1> Comparing Defence Spending Between Countries </h1>
 
 When trying to compare how much governments aroud the world spend on defence one issue is that different governments may use different definitions of what counts as defence spending. Whether or not spending on security agencies should be counted as defence expenditure is one example of the grey areas in setting out what *defence spending* is. In order to try and compare defence spending it can be helpful to sidestep this issue of definitions and use data collected by independant organisations which try and establish consistent rules regarding defence exenditure totals.
 
@@ -13,10 +21,14 @@ If these estimates were completely reliable, and all based on common definitions
 
 This document explores to what extent the defence expenditure of the top 15 global spenders differs between the IISS ad SIPRI (NATO is not compared here as they only publish estimates for member states, not globally)
 
-
-
-```{r}
-summary(cars)
+<h1> IISS and SIPRI top 15 Spenders </h1>
+```{r, echo = FALSE}
+datatable(order_data, options = list(
+                       pageLength = 15,
+                       searching = FALSE,
+                       paging = FALSE,
+                       orderClasses = TRUE
+                     ))
 ```
 
 You can also embed plots, for example:
