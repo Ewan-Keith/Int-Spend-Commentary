@@ -8,6 +8,53 @@ output: html_document
 data <- read.csv("slopeData.csv", row.names=1)
 order_data <- read.csv("spendOrder.csv")
 library(DT)
+
+######### 
+### define methods taken from https://github.com/Ewan-Keith/codebox/blob/master/slopegraph.r
+
+
+table.graph <- function(df, line.col=c("grey", "black"), label.cex=1, title.cex=1, width = 6, digits = 2, rounding.method = NULL, ...) {
+  xmin <- min(df)
+  xmax <- max(df)
+  X1 <- as.numeric(as.vector(df[,1]))
+  X2 <- as.numeric(as.vector(df[,2]))
+  # original settings
+  old.par <- par(no.readonly = TRUE)
+  # par settings usually margins
+  par(...)
+  # rounding
+  fmt <- .rd.method(rounding.method, width, digits)
+  # left
+  plot(rep(0, nrow(df)), X1, xlim=c(0,1), ylim=c(xmin, xmax), 
+       axes=FALSE, xlab='', ylab='', type='n')
+  mtext(text=paste(rownames(df), sprintf(fmt, X1), sep='  '), side=2, at=X1, las=1, cex=label.cex)
+  par(new=TRUE)
+  # right
+  plot(rep(1, nrow(df)), X2, xlim=c(0,1), ylim=c(xmin, xmax), 
+       axes=FALSE, xlab='', ylab='', type='n')
+  mtext(text=paste(sprintf(fmt, X2), rownames(df), sep='  '), side=4, at=X2, las=1, cex=label.cex)
+  # class label
+  mtext(colnames(df)[1], side=3, at=0, cex=title.cex)
+  mtext(colnames(df)[2], side=3, at=1, cex=title.cex)
+  # lines
+  segments(x0 = rep(0, nrow(df)), y0 = X1, x1 = rep(1, nrow(df)), y1 = X2,
+           col=ifelse({X1 - X2} < 0, line.col[1], line.col[2]))
+  # restore original settings
+  par(old.par)
+}
+
+.rd.method <- function(rounding.method, width, digits){
+  if(is.null(rounding.method)){
+    fmt = "%s"
+  } 
+  else{
+    rounding.character <- switch(match(rounding.method, c("round", "signif")), "f", "g")
+    fmt = paste("%", width, ".", digits, rounding.character, sep = "")
+  }
+  return(fmt)
+}
+
+#########
 ```
 
 
@@ -22,19 +69,37 @@ If these estimates were completely reliable, and all based on common definitions
 This document explores to what extent the defence expenditure of the top 15 global spenders differs between the IISS ad SIPRI (NATO is not compared here as they only publish estimates for member states, not globally)
 
 <h1> IISS and SIPRI top 15 Spenders </h1>
+
+  Below are the top 15 spenders according to IISS for 2014 (CLick on the column names to reorder the countries according to SIPRI or IISS estimates). One immediate issue with comparing the top 15 countries is that the IISS and SIPRI don't agree on what those top 15 are. For example SIPRI includes X in their top 15 but IISS do not. The selected countries are those listed by the IISS, simply because SIPRI provide estimates for over 100 countries whilst IISS only provide it for their top 15.
+
 ```{r, echo = FALSE}
 datatable(order_data, options = list(
                        pageLength = 15,
                        searching = FALSE,
                        paging = FALSE,
-                       orderClasses = TRUE
+                       orderClasses = TRUE,
+                       bInfo = FALSE
                      ))
 ```
 
-You can also embed plots, for example:
+Even limiting ourselves to the countries IISS lists as their top 15 it's clear that there is quite significant disagreement between the two sources about how much countries are spending on defence. This could be caused by two things. 
+
+It could be that there are a small number of countries which the IISS and SIPRI differ on greatly. If one country were to jump up three places in one set of rankings this would displace all three of the coutnries above it, making a mess of the rankings (compared to the other organisation) when really only one country had a different total. 
+
+It could also be that the IISS and SIPRI in fact produce generally quite different estimates of defence expenditure across the board. This would be a much more serious issue for interpreting defence spending rankings than if there were just one or two troublesome countries.
+
+Both IISS and SIPRI agree that the top two global spenders on defence are the USA and China. How close are their estimated total figures for these two countries?
 
 ```{r, echo=FALSE}
-plot(cars)
+table.graph(data[c(1,2),], mar=c(2, 10, 5, 8))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+The estimates of both SIPRI and IISS are in fairly close agreement on how much the USA spends. Although there's a difference of $28bn this is less than 5% of either institutes estimate. Things look less good for the China figures, with a gap of $86bn between estimates. This gap is 40% of the IISS total estimate and 60% of SIPRI's. 
+
+This is a huge difference in estimated spending, however it is possible that China is a one of case. What does the rest of the top 15 look like?
+
+```{r, echo=FALSE}
+table.graph(data[-c(1,2),], mar=c(2, 10, 5, 8))
+```
+
+Clearly China is not the only country where the IISS and SIPRI estimates differ quite markedly. Whilst there is close agreement on countries such as the UK, Saudi Arabia, Germany and Brazil there are major differences in spending estimates amongst Russia, France, Israel and Iraq
